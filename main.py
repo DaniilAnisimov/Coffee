@@ -4,13 +4,15 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import sqlite3
+from addEditCoffeeForm import Ui_Dialog
+from main_form import Ui_MainWindow
 
 
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        uic.loadUi('main.ui', self)
-        self.con = sqlite3.connect("coffee.sqlite")
+        self.setupUi(self)
+        self.con = sqlite3.connect("data/coffee.sqlite")
         self.cur = self.con.cursor()
         self.initUI()
 
@@ -53,10 +55,10 @@ class MainWindow(QMainWindow):
         self.load_table()
 
 
-class CoffeeDialog(QDialog):
+class CoffeeDialog(QDialog, Ui_Dialog):
     def __init__(self, con, cur, type_d, row):
         super(CoffeeDialog, self).__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         if type_d == "add":
             self.setWindowTitle("Добавить элемент")
             self.pb_add.setText("Добавить")
